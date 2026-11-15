@@ -194,6 +194,9 @@ function fresh(keep){
 
 let S;
 try{S=JSON.parse(localStorage.getItem(SK))||fresh()}catch(e){S=fresh()}
+
+S.page = "home";
+  
 if(!Array.isArray(S.bld)) S.bld=[];
 if(!S.own) S.own={};
 if(!S.eq) S.eq={};
