@@ -2,6 +2,7 @@
 **Beyond Earth. Beyond Survival — An interactive 3D Moon-to-Mars space habitat simulator and space science trainer.**
 
 🔗 **Play Live Demo:** [https://astrobaseweb.netlify.app](https://astrobaseweb.netlify.app)
+                        https://k-madhi13.github.io/AstroBase-NasaSpaceAppsChallenge2026/
 
 ---
 
