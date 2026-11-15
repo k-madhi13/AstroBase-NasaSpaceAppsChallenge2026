@@ -203,6 +203,10 @@ if(!S.eq) S.eq={};
 
 let QS=null;
 function save(){try{localStorage.setItem(SK,JSON.stringify(S))}catch(e){}}
+
+S.page = "home";
+save();
+
 const $=s=>document.querySelector(s),R=Math.round,pi=()=>PL[S.planet]?PL[S.planet].i:0;
 
 function toast(m){
