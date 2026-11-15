@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>ASTROBASE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--bg:#061a3f;--p:#0b2a5c;--ln:#2a5fa8;--c:#6cc4ff;--o:#ff8c42;--t:#ffffff;--m:#a9c4ee;--g:#3ddc84;--y:#ffd23f;--r:#ff5a5a;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html{background:radial-gradient(ellipse at 15% 0%,#1a5cc255,transparent 55%),radial-gradient(ellipse at 95% 100%,#ff8c4225,transparent 50%),#061a3f;background-attachment:fixed}body{margin:0;color:var(--t);font:16px/1.55 "Trebuchet MS","Segoe UI",system-ui,sans-serif;min-height:100vh;
+background-image:radial-gradient(1px 1px at 12% 20%,#fff9,transparent),radial-gradient(1px 1px at 70% 10%,#fff8,transparent),radial-gradient(1.5px 1.5px at 40% 65%,#9fe7ff99,transparent),radial-gradient(1px 1px at 88% 78%,#fff8,transparent),radial-gradient(1px 1px at 25% 90%,#fff7,transparent);background-size:420px 420px;animation:dr 120s linear infinite}
+@keyframes dr{to{background-position:420px 420px}}
+@media(prefers-reduced-motion:reduce){body{animation:none}*{transition:none!important}}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;margin:.2em 0;letter-spacing:.02em}
+a{color:var(--c)}
+#app{display:grid;grid-template-columns:190px 1fr;min-height:100vh}
+nav{background:#071f4aee;border-right:1px solid var(--ln);padding:14px 8px;position:sticky;top:0;height:100vh;overflow:auto}
+nav b{display:block;font:700 20px Georgia,serif;color:var(--c);padding:4px 10px 12px}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--m);padding:9px 10px;border-radius:8px;cursor:pointer;font:inherit}
+nav button.on,nav button:hover{background:#1b4a94;color:var(--t)}
+#top{display:flex;gap:16px;flex-wrap:wrap;padding:10px 20px;border-bottom:1px solid var(--ln);background:#060d20cc;font-size:14px;color:var(--m)}
+#top span b{color:var(--t)}
+#pg{padding:20px;max-width:1100px}
+.card{background:linear-gradient(160deg,#123880aa,#0a2150cc);border:1px solid var(--ln);border-radius:12px;padding:16px;margin:0 0 14px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.btn{background:var(--y);color:#1a1200;border:0;border-radius:8px;padding:10px 16px;font:700 15px inherit;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 0 14px #4fd8ff88}
+.btn.o{background:var(--o)}.btn.g{background:transparent;color:var(--c);border:1px solid var(--c)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:focus-visible,nav button:focus-visible{outline:2px solid var(--y);outline-offset:2px}
+.hero{padding:40px 10px 20px;text-align:center}
+.hero h1{font-size:clamp(40px,9vw,84px);margin:0;color:var(--t);text-shadow:0 0 30px #6cc4ff88,0 4px 0 #ff8c42}
+.orbs{height:120px;position:relative;margin:10px auto;max-width:420px}
+.moon,.mars{position:absolute;border-radius:50%}
+.moon{width:90px;height:90px;left:25%;top:10px;background:radial-gradient(circle at 30% 40%,#0002 0 8%,transparent 9%),radial-gradient(circle at 62% 66%,#0002 0 11%,transparent 12%),radial-gradient(circle at 70% 28%,#0002 0 6%,transparent 7%),radial-gradient(circle at 35% 30%,#fff,#d4dcec 60%,#8a96b0);box-shadow:0 0 36px #ffffff55}
+.mars{width:70px;height:70px;right:25%;top:30px;background:radial-gradient(circle at 40% 60%,#0003 0 9%,transparent 10%),radial-gradient(circle at 66% 30%,#0003 0 7%,transparent 8%),radial-gradient(circle at 35% 30%,#ffc58a,#e2692d 60%,#8a3414);box-shadow:0 0 36px #ff8c4277}
+.bar{background:#0a1220;border:1px solid var(--ln);border-radius:6px;height:12px;overflow:hidden}
+.bar i{display:block;height:100%;transition:width .6s}
+.row{display:flex;justify-content:space-between;font-size:14px;margin-top:8px}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--ln);color:var(--m)}
+.sim{color:var(--o)}.real{color:var(--g)}
+.log{max-height:230px;overflow:auto;font-size:14px;color:var(--m)}
+.log div{padding:3px 0;border-bottom:1px solid #12233f}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;background:#0a1329;border:1px solid var(--ln);color:var(--t);padding:10px;border-radius:8px;cursor:pointer;font:inherit}
+.opt.ok{border-color:var(--g);background:#0c2a1c}.opt.no{border-color:var(--r);background:#2a1010}
+.toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#12305a;border:1px solid var(--c);padding:10px 16px;border-radius:8px;z-index:9}
+.ev{border-color:var(--o);box-shadow:0 0 18px #ff9d4d44}
+.map{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;padding:8px;border-radius:14px;border:2px solid var(--ln);max-width:640px;aspect-ratio:8/6}.map.moon{background:radial-gradient(circle at 30% 20%,#fff,#dfe5f0 60%,#b4bfd3)}.map.mars{background:radial-gradient(circle at 30% 20%,#ffb066,#e2692d 60%,#a8421b)}.tile{border-radius:6px;border:0;cursor:pointer;position:relative;padding:0;min-height:0;font-size:clamp(14px,3.4vw,26px);background-color:#0000001a;box-shadow:inset 0 0 0 1px #00000026}.tile:hover{background-color:#ffffff66}.tile:focus-visible{outline:2px solid #1b4a94}.blk{position:absolute;inset:3px;border-radius:5px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -6px 0 #0004,0 3px 0 #0005,0 4px 8px #0004}.pal{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.pb{display:flex;align-items:center;gap:8px;background:#0a2150;border:2px solid var(--ln);color:var(--t);border-radius:10px;padding:6px 10px;cursor:pointer;font:inherit}.pb.on{border-color:var(--y);box-shadow:0 0 12px #ffd23f66}.pb .blk{position:relative;inset:auto;width:28px;height:28px}
+@media(max-width:820px){#app{grid-template-columns:1fr}
+nav{position:fixed;bottom:0;left:0;right:0;top:auto;height:auto;display:flex;overflow-x:auto;z-index:5;border-top:1px solid var(--ln);padding:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px))}
+nav b{display:none}nav button{width:auto;white-space:nowrap}#pg{padding:14px 14px 80px}}
+</style><style>
+:root{--bg:#050505;--p:#090909;--ln:#ffffff55;--c:#fff;--o:#aaa;--y:#fff;--m:#aaa;--g:#ddd}
+html{background:#050505!important}body{font-family:"Segoe UI",system-ui,sans-serif;letter-spacing:.02em}
+nav{background:#090909ee!important}nav button.on,nav button:hover{background:#303030!important}#top{background:#050505cc!important}
+.card{background:#171717cc!important;border-radius:4px!important}.btn{color:#050505!important;border-radius:2px!important;letter-spacing:.08em;text-transform:uppercase;font-size:13px}.btn.g{color:#fff!important}.btn.o{background:#aaa}
+.hero h1{text-shadow:0 0 24px #fff6!important;letter-spacing:.2em}.bar{background:#171717!important}.mars{filter:none!important;background:radial-gradient(circle at 40% 60%,#0003 0 9%,transparent 10%),radial-gradient(circle at 66% 30%,#0003 0 7%,transparent 8%),radial-gradient(circle at 35% 30%,#ffb067,#e2692d 60%,#8a3414)!important;box-shadow:0 0 36px #ff8c4299!important}
+#app{grid-template-columns:200px minmax(0,1fr)}#app>div{min-width:0}#pg{max-width:none!important;width:100%;padding:24px 32px}
+#top{align-items:center;gap:8px 28px;padding:12px 32px}h2{margin:0 0 16px;font-size:26px}h3{margin:10px 0 8px}
+.grid{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:stretch}.grid>.card{display:flex;flex-direction:column;margin:0}.grid>.card>p:last-child{margin-top:auto}
+.card{padding:20px}.card ul{padding-left:20px;margin:8px 0 14px}.card li{margin:4px 0}.card .tag{align-self:flex-start;margin:6px 0 12px;line-height:1.5}
+.grid>.card>.orbs{width:100%;max-width:none;height:110px;margin:0 0 8px}.row{align-items:center}
+nav button{padding:10px 12px;margin-bottom:2px}.moon{box-shadow:0 0 36px #fff5}
+.toast{background:#171717!important;border-color:#fff!important}.sim{color:#aaa}.ev{border-color:#fff!important;box-shadow:0 0 18px #fff3!important}.pb{background:#171717!important;border:1px solid #fff5!important;border-radius:2px!important}.pb:disabled{opacity:.35}
+#world{position:relative;height:72vh;min-height:360px;border:1px solid #fff5;overflow:hidden;background:#000;margin:10px 0}#world canvas{display:block;width:100%;height:100%;touch-action:none}
+#tb{position:absolute;left:8px;top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;z-index:2}#tb .btn{padding:6px 10px;background:#000a}
+#cp{width:34px;height:34px;border:1px solid #fff;border-radius:50%;display:flex;justify-content:center;font:700 12px sans-serif;background:#000a}
+#insp{position:absolute;right:8px;top:8px;width:240px;background:#000c;border:1px solid #fff5;padding:10px;font-size:13px;display:none;z-index:2}
+#brief{position:absolute;left:8px;bottom:8px;max-width:340px;background:#000d;border:1px solid #fff;padding:12px;font-size:13px;z-index:2}
+#intro{position:fixed;inset:0;background:#000;z-index:30;transition:opacity 1.2s;overflow:hidden}#ic{position:absolute;left:0;right:0;bottom:15%;text-align:center;letter-spacing:.4em;font-size:13px}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script><script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script></head><body>
+<div id="app"><nav id="nav"></nav><div><div id="top"></div><main id="pg"></main></div></div>
+<script>
+const SK="astrobase_v1";
+const PAGES=[["home","Home"],["mission","Missions"],["cmd","Command Center"],["lab","Research Lab"],["shop","Marketplace"],["acad","Space Academy"],["quiz","Quiz Center"],["how","How to Play"],["ach","Achievements"],["rep","Mission Report"],["set","Settings"]];
+const PL={moon:{n:"Artemis: Lunar South Pole",i:0,short:"Moon"},mars:{n:"Red Planet: Jezero Crater",i:1,short:"Mars"}};
+const MISS={moon:["Locate potential water ice","Build energy storage for long darkness","Produce oxygen on site","Survive the extended shadow period","Finish 30 days with crew and base intact"],mars:["Produce oxygen from the thin atmosphere","Set up water extraction","Protect the base from dust storms","Keep food production running","Finish 30 days with crew and base intact"]};
+const EQ=[
+{id:"solar",n:"Solar array",c:"Energy",p:150,d:"+55 kWh/day at full sun, scaled by local sunlight. Mars dust cuts it by 20%.",m:[1,.8]},
+{id:"bat",n:"Battery bank",c:"Energy",p:120,d:"+250 kWh storage so surplus power survives dark days."},
+{id:"gen",n:"Backup generator",c:"Energy",p:200,d:"+25 kWh/day regardless of sunlight."},
+{id:"o2",n:"Oxygen generator",c:"Life support",p:180,d:"+12 O₂/day, uses 18 kWh. Moon: regolith extraction (80% efficiency). Mars: MOXIE-inspired.",m:[.8,1],e:18},
+{id:"rec",n:"Water recycler",c:"Life support",p:150,d:"Cuts crew water use by 35%, uses 4 kWh.",e:4},
+{id:"ice",n:"Water extractor",c:"Life support",p:170,d:"+14 water/day, uses 20 kWh. Moon: ice mining. Mars: 60% efficiency.",m:[1,.6],e:20,t:["ice","wx"]},
+{id:"gh",n:"Greenhouse",c:"Agriculture",p:200,d:"+7 kg food/day, uses 10 kWh. Moon: 60% efficiency (harsh lighting).",m:[.6,1],e:10},
+{id:"hydro",n:"Hydroponics",c:"Agriculture",p:260,d:"+11 kg food/day, uses 14 kWh and 4 water. Needs Food Production research.",e:14,t:["agri","agri"]},
+{id:"shield",n:"Radiation shield",c:"Protection",p:140,d:"Halves daily radiation damage to the crew."},
+{id:"ins",n:"Thermal insulation",c:"Protection",p:110,d:"Cuts base energy use by 15%."},
+{id:"dust",n:"Dust protection",c:"Protection",p:90,d:"Reduces how much dust cuts solar output."},
+{id:"rover",n:"Surface rover",c:"Exploration",p:220,d:"+8 CR/day from surveys."},
+{id:"lab",n:"Geology laboratory",c:"Exploration",p:300,d:"+4 CR and +1 research point per day. Needs Planetary Geology research.",t:["geo","geo"]}];
+const BLK={solar:["#ffd23f","☀️"],bat:["#6cc4ff","🔋"],gen:["#ff8c42","⚡"],o2:["#ffffff","💨"],rec:["#3b82f6","♻️"],ice:["#bfe6ff","⛏️"],gh:["#ffe08a","🌱"],hydro:["#ffb347","🌿"],shield:["#4f8cff","🛡️"],ins:["#ff7a2e","🔥"],dust:["#dbe9ff","🌀"],rover:["#ffc266","🚙"],lab:["#f2f6ff","🔬"]};
+const RS=[
+{id:"ice",n:"Water ice detection",pl:0,cost:120,days:3,k:"energy",v:40,d:"Survey shadowed craters for ice.",s:"Cold traps near the poles can hold ice. LCROSS saw water in a Cabeus crater plume in 2009.",u:"Unlocks the water extractor",rw:40},
+{id:"reg",n:"Regolith shielding",pl:0,cost:100,days:3,k:"energy",v:30,d:"Pile lunar soil over the habitat.",s:"Regolith absorbs radiation and micrometeorite impacts.",u:"Radiation shield 10% stronger",rw:30},
+{id:"sol",n:"Solar energy optimization",pl:0,cost:140,days:4,k:"energy",v:30,d:"Aim panels for polar low sun angles.",s:"Near the pole the Sun stays low, so panel angle matters.",u:"Solar output +20%",rw:40},
+{id:"wx",n:"Water extraction",pl:1,cost:120,days:3,k:"energy",v:40,d:"Pull water from Martian soil and ice.",s:"Mars holds water ice below the surface and in minerals.",u:"Unlocks the water extractor",rw:40},
+{id:"dust",n:"Dust mitigation",pl:1,cost:110,days:3,k:"energy",v:30,d:"Keep panels clear in dust storms.",s:"Dust in the air blocks sunlight and settles on panels.",u:"Dust hurts solar less",rw:30},
+{id:"moxie",n:"Atmospheric oxygen",pl:1,cost:140,days:4,k:"energy",v:40,d:"Split carbon dioxide into oxygen.",s:"The Mars atmosphere is mostly CO₂. MOXIE on Perseverance made oxygen from it.",u:"Oxygen generators +25%",rw:40},
+{id:"agri",n:"Food production",pl:2,cost:130,days:3,k:"water",v:20,d:"Grow crops without Earth soil.",s:"Plants can grow in nutrient water under artificial light.",u:"Unlocks hydroponics",rw:30},
+{id:"recy",n:"Advanced water recycling",pl:2,cost:130,days:3,k:"energy",v:30,d:"Reclaim more water from air and waste.",s:"The ISS already recycles most of its water.",u:"Recycler saves 50%",rw:30},
+{id:"geo",n:"Planetary geology",pl:2,cost:100,days:3,k:"energy",v:25,d:"Study rocks and layers.",s:"Rock layers record the history of a world.",u:"Unlocks the geology lab",rw:50},
+{id:"batt",n:"Battery technology",pl:2,cost:120,days:3,k:"energy",v:30,d:"Denser, longer-lasting cells.",s:"Better storage lets a base ride out long nights and storms.",u:"Battery capacity +40%",rw:30}];
+const EV={
+shadow:{n:"Extended shadow period",pl:0,sev:"High",d:"Sunlight at the pole has dropped. Solar output falls to about 35% for 3 days.",s:"At the lunar poles the Sun skims the horizon, so terrain can shade your panels for long periods.",ch:[["Activate backup batteries",{energy:-60,sun:[.35,3]}],["Reduce non-essential equipment",{energy:-20,sun:[.35,3],cr:-10}],["Continue normal operations",{energy:-150,sun:[.35,3]}]]},
+storm:{n:"Regional dust storm",pl:1,sev:"High",d:"A dust storm is reducing solar energy production for 4 days.",s:"Dust in the air absorbs and scatters sunlight. Storms can last days to weeks.",ch:[["Activate backup batteries",{energy:-80,sun:[.4,4]}],["Reduce non-essential equipment usage",{energy:-30,sun:[.4,4],cr:-10}],["Continue normal operations and risk an energy shortage",{energy:-160,integ:-8,sun:[.4,4]}]]},
+flare:{n:"Solar radiation alert",pl:2,sev:"Medium",d:"A solar flare was detected. Radiation levels are rising.",s:"Flares send bursts of X-rays and charged particles. Shielding and shelter reduce exposure.",ch:[["Shelter the crew in the core module",{energy:-20,o2:-5}],["Keep working outside",{health:-14,rad:1,cr:20}]]},
+mal:{n:"Equipment malfunction",pl:2,sev:"Medium",d:"A system is failing.",s:"Dust, cold and wear break machines far from help.",ch:[["Pay for repairs (40 CR)",{cr:-40}],["Ignore it",{integ:-10}]]},
+dustm:{n:"Lunar dust accumulation",pl:0,sev:"Low",d:"Sharp lunar dust is clinging to panels and seals.",s:"Lunar dust is abrasive and electrostatically charged, so it sticks.",ch:[["Clean the panels",{energy:-20}],["Ignore it",{sun:[.7,3]}]]},
+cold:{n:"Temperature drop",pl:1,sev:"Medium",d:"A cold snap hits the base.",s:"The thin atmosphere holds little heat, so nights get very cold.",ch:[["Boost heaters",{energy:-45}],["Wear extra layers and wait",{health:-6}]]},
+ice:{n:"Water ice discovery",pl:0,sev:"Good",d:"Survey data shows ice near the base.",s:"Permanently shadowed regions can trap water for billions of years.",auto:{water:40,cr:30,disc:1}},
+wxd:{n:"Water extraction discovery",pl:1,sev:"Good",d:"Subsurface water found nearby.",s:"Mars has water ice under the surface, especially away from the equator.",auto:{water:50,cr:30,disc:1}},
+dustinc:{n:"Atmospheric dust increase",pl:1,sev:"Low",d:"Haze reduces sunlight for 3 days.",s:"Seasonal winds lift fine dust high into the sky.",auto:{sun:[.7,3]}}};
+const AR=[
+{id:"moon",n:"Lunar South Pole",cat:"Moon",src:[["LPI Lunar South Pole Atlas","https://www.lpi.usra.edu/lunar/lunar-south-pole-atlas/"]],body:"The south pole has crater floors that never see sunlight and nearby ridges that get sunlight most of the year. That mix of cold traps and power sources makes it a top Artemis target.",f:["Some permanently shadowed craters stay colder than about −230 °C.","The Moon has almost no atmosphere, only a thin exosphere."],g:"On the Artemis mission, sunlight swings between bright and dark. The 28-day cycle and numbers here are a simplified game model.",q:"moon"},
+{id:"ice",n:"Water ice on the Moon",cat:"Moon",src:[["NASA SVS 4574","https://svs.gsfc.nasa.gov/4574/"],["LRO Diviner data","https://www.diviner.ucla.edu/data"]],body:"Water molecules can get trapped in places so cold they never warm up. Orbiters measure temperature and reflectance to find where frost could survive.",f:["LCROSS found water in a Cabeus crater plume in 2009.","Ice can be melted for drinking water or split into oxygen and hydrogen."],g:"The game’s water extractor gives 14 water per day. That rate is invented for balance, not a measured yield.",q:"moon"},
+{id:"mat",n:"The Martian atmosphere",cat:"Mars",src:[["Perseverance instruments","https://science.nasa.gov/mission/mars-2020-perseverance/science-instruments/"]],body:"Mars air is mostly carbon dioxide and very thin. Its pressure is under 1% of Earth’s, so humans need pressurized habitats and suits.",f:["Perseverance’s MEDA instrument measures wind, pressure, temperature and dust.","MOXIE made oxygen from Martian CO₂ in 16 runs."],g:"Temperatures in the game are simplified. Curiosity REMS data (Gale Crater) is historical, not Jezero weather.",q:"mars"},
+{id:"jez",n:"Jezero Crater",cat:"Mars",src:[["Mars 2020 Perseverance","https://science.nasa.gov/mission/mars-2020-perseverance/science-instruments/"],["MSL REMS (PDS)","https://pds.nasa.gov/ds-view/pds/viewProfile.jsp?dsid=MSL-M-REMS-4-ENVRDR-V1.0"]],body:"Jezero is a crater about 45 km wide that once held a lake fed by a river. Its delta may preserve signs of ancient life. Perseverance landed there on 18 February 2021.",f:["Dust storms can darken the sky for weeks.","Perseverance is collecting rock samples for a future return to Earth."],g:"Dust storm timing in the game is scripted and random, not a forecast.",q:"mars"},
+{id:"fl",n:"Solar flares and space weather",cat:"General",src:[["NASA DONKI","https://ccmc.gsfc.nasa.gov/tools/DONKI/"],["NASA API portal","https://api.nasa.gov/"]],body:"A solar flare is a sudden burst of energy from the Sun. Flares are ranked A, B, C, M and X, and X is the strongest. Radiation from big flares can harm astronauts and electronics.",f:["Flare light reaches Earth in about 8 minutes.","DONKI logs flares, storms and other space weather events."],g:"Radiation alerts in the game are random. The panel in the Command Center shows labeled sample data.",q:"wx"},
+{id:"isru",n:"In-situ resource utilization (ISRU)",cat:"General",src:[["NASA Perseverance MOXIE","https://science.nasa.gov/mission/mars-2020-perseverance/science-instruments/"]],body:"ISRU means making supplies from local materials instead of shipping everything from Earth: water from ice, oxygen from CO₂ or soil, and shielding from regolith. It is key to lasting space bases.",f:["Every kilogram launched costs a lot, so local resources save money.","Oxygen can also be used as rocket propellant."],g:"Production numbers in the game are balance values, not real equipment specs.",q:"mars"}];
+const QZ={moon:{n:"Moon Knowledge",qs:[["Why is the lunar south pole interesting?",["It is always hot","Shadowed craters may hold water ice","It has thick air","It faces Earth"],1,"Permanently shadowed craters are cold enough to trap water ice."],["What is the Moon’s atmosphere like?",["Thick oxygen","Mostly nitrogen","Almost none","Rich in methane"],2,"The Moon has only a very thin exosphere."],["What is loose lunar soil called?",["Loam","Regolith","Magma","Silt"],1,"Regolith is the broken rock dust covering the Moon."],["Which NASA program aims to return people to the Moon?",["Gemini","Viking","Artemis","Voyager"],2,"Artemis plans a sustained human presence at the Moon."],["Which LRO instrument maps lunar temperatures?",["Diviner","Curiosity","MOXIE","DONKI"],0,"Diviner is a radiometer on the Lunar Reconnaissance Orbiter."]]},
+mars:{n:"Mars Knowledge",qs:[["Where did Perseverance land?",["Gale Crater","Jezero Crater","Olympus Mons","Hellas"],1,"Perseverance landed in Jezero Crater in 2021."],["Mars air is mostly…",["Oxygen","Nitrogen","Carbon dioxide","Helium"],2,"About 95% of the Martian atmosphere is CO₂."],["What did MOXIE do?",["Drilled ice","Made oxygen from CO₂","Measured wind","Took selfies"],1,"MOXIE showed oxygen can be made from Martian air."],["Jezero was once…",["A volcano vent","A lake with a river delta","A glacier","A desert"],1,"Orbital images show a delta from an ancient river."],["How do dust storms affect solar panels?",["Add power","Block sunlight","Cool them","No effect"],1,"Dust blocks sunlight and can coat panels."]]},
+wx:{n:"Space Weather",qs:[["A solar flare is…",["A burst of energy from the Sun","A comet tail","A lunar crater","A meteor"],0,"Flares are sudden releases of magnetic energy."],["What does DONKI stand for?",["Database Of Notifications, Knowledge, Information","Deep Orbit Near-Kuiper Index","Data On Nearby Kinetic Impacts","Dust Observations in Nepal"],0,"DONKI is a NASA CCMC database of space weather events."],["Which flare class is strongest?",["A","C","M","X"],3,"X-class flares are the most intense."],["What helps shield a base from radiation?",["Thin glass","Thick regolith cover","Open windows","Solar panels"],1,"Mass blocks radiation, and regolith is plentiful."],["Auroras are caused by…",["Moon phases","Charged particles hitting air","Dust storms","City lights"],1,"Solar particles excite atmospheric gas, making light."]]}};
+const AC=[["first","First Steps Beyond Earth","Advance your first day",s=>s.day>1||s.over],["eff","Efficient Commander","Win with all resources above 50% of start",s=>s.over==="win"&&Object.keys(s.res).every(k=>s.res[k]>=.5*START[k])],["mast","Master Researcher","Complete 5 research projects",s=>Object.keys(s.done).length>=5],["storm","Storm Survivor","Handle 3 environmental events",s=>s.evn>=3],["sust","Sustainable Colony","Own oxygen, water and food producers",s=>s.eq.o2&&(s.eq.rec||s.eq.ice)&&(s.eq.gh||s.eq.hydro)],["sci","Science Explorer","Earn credits from 2 quizzes",s=>Object.keys(s.quiz).length>=2],["30","30-Day Survivor","Win a mission",s=>s.over==="win"]];
+const START={o2:100,water:200,food:150,energy:500};
+function fresh(keep){return{planet:null,started:false,day:1,credits:1000,res:{...START},health:100,integ:100,eq:{},own:{},grid:[],bld:[],sel:null,done:{},act:{},rp:0,st:{m:1,days:0},ev:null,evn:0,earned:0,spent:0,disc:0,log:[],over:null,last:"",quiz:keep?keep.quiz:{},ach:keep?keep.ach:{},page:"home",tutSun:60}}
+let S;try{S=JSON.parse(localStorage.getItem(SK))||fresh()}catch(e){S=fresh()}
+let QS=null;if(!S.grid){S.grid=Array(48).fill(null);S.own={...(S.eq||{})};S.eq={};S.sel=null}
+function save(){try{localStorage.setItem(SK,JSON.stringify(S))}catch(e){}}
+const $=s=>document.querySelector(s),R=Math.round,pi=()=>PL[S.planet]?PL[S.planet].i:0;
+function toast(m){const d=document.createElement("div");d.className="toast";d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2400)}
+function go(p){S.page=p;window.scrollTo(0,0);QS=p==="quiz"?QS:null;save();draw()}
+function cap(){return 800+250*(S.eq.bat||0)*(tech("batt")?1.4:1)}
+function tech(id){return !!S.done[id]}
+function sunNow(){let s=S.planet==="moon"?((S.day%28>=12&&S.day%28<=17)?.1:.5+.35*Math.sin(S.day/3)):.65;if(S.st.days>0){let m=S.st.m,k=(S.eq.dust?.4:0)+(tech("dust")?.3:0);m=m+(1-m)*Math.min(k,.7);s*=m}return Math.max(.05,s)}
+function temp(){const s=sunNow();return S.planet==="moon"?(s>.3?-45:-175):-55+R(15*Math.sin(S.day))-(S.st.days>0?10:0)}
+function eqm(id){const e=EQ.find(x=>x.id===id);return e.m?e.m[pi()]:1}
+function addFx(fx,L){const r=S.res;let h=fx.health||0;if(fx.rad&&h<0)h*=S.eq.shield?.5:1;
+for(const k of["o2","water","food","energy"])if(fx[k])r[k]=Math.max(0,Math.min(k==="energy"?cap():999,r[k]+fx[k]));
+if(fx.cr){S.credits+=fx.cr;if(fx.cr>0)S.earned+=fx.cr;else S.spent-=fx.cr}
+S.health=Math.min(100,S.health+h);if(fx.integ)S.integ+=fx.integ;if(fx.disc)S.disc++;
+if(fx.sun)S.st={m:fx.sun[0],days:fx.sun[1]};
+L.push("Effect: "+Object.entries(fx).filter(([k])=>k!=="rad").map(([k,v])=>k+" "+(Array.isArray(v)?(v[0]*100)+"% sun for "+v[1]+"d":v)).join(", "))}
+function pickEvent(){const d=S.day;if(S.planet==="moon"&&d===10)return"shadow";if(S.planet==="mars"&&d===12)return"storm";if(Math.random()<.22){const pool=Object.keys(EV).filter(k=>(EV[k].pl===2||EV[k].pl===pi())&&k!==S.last);return pool[Math.floor(Math.random()*pool.length)]}return null}
+function adv(){if(!S.started||S.over||S.ev)return;
+const L=["Day "+S.day+" report"],r=S.res,sun=sunNow();
+const solar=(S.eq.solar||0)*55*sun*eqm("solar")*(tech("sol")?1.2:1),gens=(S.eq.gen||0)*25;
+let en=r.energy+solar+gens;L.push("Generated "+R(solar+gens)+" kWh (sunlight "+R(sun*100)+"%)");
+const ins=S.eq.ins?.85:1;let use=(15+(S.planet==="moon"&&sun<.3?15:0))*ins;en-=use;L.push("Base systems used "+R(use)+" kWh");
+const mul=n=>n*(S.eq[n]?1:0);
+for(const id of["o2","ice","gh","hydro","rec"]){const n=S.eq[id]||0;if(!n)continue;const e=EQ.find(x=>x.id===id),c=e.e*n*ins;
+if(en<c){L.push(e.n+" idle: not enough power");continue}
+en-=c;const m=eqm(id)*n;
+if(id==="o2"){const g=12*m*(tech("moxie")?1.25:1);r.o2+=g;L.push("+"+R(g)+" oxygen")}
+if(id==="ice"){if(!(tech(S.planet==="moon"?"ice":"wx"))){en+=c;L.push("Water extractor needs research");continue}r.water+=14*m;L.push("+"+R(14*m)+" water")}
+if(id==="gh"){r.food+=7*m;L.push("+"+R(7*m)+" kg food")}
+if(id==="hydro"){if(r.water>=4*n){r.water-=4*n;r.food+=11*n;L.push("+"+11*n+" kg food (−"+4*n+" water)")}else{en+=c;L.push("Hydroponics idle: no water")}}}
+let hp=0;const need={o2:3.6,water:6.6*(1-(S.eq.rec?(tech("recy")?.5:.35):0)),food:3.3};
+for(const k in need){r[k]-=need[k];if(r[k]<0){r[k]=0;hp+=15;L.push("SHORTAGE of "+k+": crew health −15")}}
+L.push("Crew used "+R(need.o2*10)/10+" O₂, "+R(need.water*10)/10+" water, "+R(need.food*10)/10+" kg food");
+if(en<=0){en=0;S.integ-=3;L.push("Power failure: base integrity −3")}
+r.energy=Math.min(cap(),en);
+const rad=(S.planet==="moon"?1.5:.6)*(S.eq.shield?(tech("reg")?.4:.5):1);hp+=rad;
+if(hp<=rad)S.health=Math.min(100,S.health+3+rad);S.health-=hp;
+const inc=15+8*(S.eq.rover||0)+4*(S.eq.lab||0);S.credits+=inc;S.earned+=inc;S.rp+=S.eq.lab||0;L.push("Credits +"+inc+" CR, radiation −"+(R(rad*10)/10)+" health");
+for(const id in S.act){S.act[id]--;if(S.act[id]<=0){delete S.act[id];S.done[id]=1;const x=RS.find(z=>z.id===id);S.credits+=x.rw;S.earned+=x.rw;S.rp+=10;S.disc++;L.push("Research complete: "+x.n+" (+"+x.rw+" CR, +10 RP)")}}
+if(S.st.days>0)S.st.days--;
+S.health=R(Math.min(100,S.health)*10)/10;
+if(S.health<=0||S.integ<=0){S.over="fail";L.push("MISSION FAILED")}
+else if(S.day>=30){S.over="win";L.push("Day 30 complete. Mission success!")}
+else{S.day++;const k=pickEvent();if(k){S.last=k;const e=EV[k];L.push("EVENT: "+e.n);if(e.auto){addFx(e.auto,L);S.evn++}else S.ev=k}}
+S.log.unshift(...L.reverse());S.log=S.log.slice(0,80);
+S.ach=S.ach||{};AC.forEach(a=>{if(!S.ach[a[0]]&&a[3](S)){S.ach[a[0]]=1;toast("Achievement: "+a[1])}});
+save();if(S.over)S.page="rep";draw()}
+function choose(i){const e=EV[S.ev],L=["Decision: "+e.ch[i][0]];addFx(e.ch[i][1],L);S.evn++;S.ev=null;
+if(S.health<=0||S.integ<=0)S.over="fail";S.log.unshift(...L.reverse());S.ach=S.ach||{};AC.forEach(a=>{if(!S.ach[a[0]]&&a[3](S)){S.ach[a[0]]=1;toast("Achievement: "+a[1])}});if(S.over)S.page="rep";save();draw()}
+function launch(p){S=fresh(S);S.planet=p;S.started=true;S.page="shop";save();draw();toast("Buy blocks, place them on the map, then open Command Center")}
+function buy(id){const e=EQ.find(x=>x.id===id);if(e.t&&!tech(e.t[pi()]))return toast("Research required first");if(S.credits<e.p)return toast("Not enough credits");S.credits-=e.p;S.spent+=e.p;S.own[id]=(S.own[id]||0)+1;S.sel=id;save();toast("Bought. Pick it in the palette, then click the terrain to place it.");draw()}
+function recount(){S.eq={};S.grid.forEach(g=>{if(g)S.eq[g]=(S.eq[g]||0)+1})}
+function pick(id){S.sel=S.sel===id?null:id;draw()}
+function tile(i){const g=S.grid[i];if(S.over)return;if(g){S.grid[i]=null;recount();S.sel=g}else if(S.sel){if((S.own[S.sel]||0)-(S.eq[S.sel]||0)<1)return toast("None left in stock. Buy more in the Marketplace");S.grid[i]=S.sel;recount()}else return toast("Pick a building first");save();draw()}
+function startR(id){const x=RS.find(z=>z.id===id);if(S.credits<x.cost||S.res[x.k]<x.v)return toast("Need "+x.cost+" CR and "+x.v+" "+x.k);S.credits-=x.cost;S.spent+=x.cost;S.res[x.k]-=x.v;S.act[id]=x.days;save();draw()}
+function qstart(id){QS={id,i:0,sel:null,right:0,done:false,fresh:!S.quiz[id]};draw()}
+function qpick(j){if(QS.sel!==null)return;QS.sel=j;if(j===QZ[QS.id].qs[QS.i][2])QS.right++;draw()}
+function qnext(){const n=QZ[QS.id].qs.length;if(QS.i<n-1){QS.i++;QS.sel=null}else{QS.done=true;if(!S.quiz[QS.id]){S.quiz[QS.id]=1;S.credits+=4*QS.right;S.earned+=4*QS.right;S.ach=S.ach||{};AC.forEach(a=>{if(!S.ach[a[0]]&&a[3](S)){S.ach[a[0]]=1;toast("Achievement: "+a[1])}})}save()}draw()}
+function score(){if(S.over==="fail")return 0;const eff=Object.keys(START).reduce((a,k)=>a+Math.min(1,S.res[k]/START[k]),0)/4;return R(400+S.health*2+S.integ*1.5+eff*100+S.rp*3+S.evn*10+S.disc*15)}
+function rank(){if(S.over!=="win")return S.over==="fail"?"Mission Failed":"In progress";const c=score();return c>=950?"Legendary Explorer":c>=800?"Gold Commander":c>=650?"Silver Commander":"Bronze Commander"}
+function bar(l,v,mx,u){const p=Math.max(0,Math.min(100,v/mx*100)),c=p>50?"var(--g)":p>25?"var(--y)":"var(--r)";return`<div class="row"><span>${l}</span><span>${R(v)} ${u}</span></div><div class="bar"><i style="width:${p}%;background:${c}"></i></div>`}
+const V={
+home(){const c=S.started&&!S.over;return`<div class="hero"><div class="orbs"><div class="moon"></div><div class="mars"></div></div><h1>ASTROBASE</h1><h2 style="color:var(--c)">Beyond Earth. Beyond Survival.</h2><p style="max-width:560px;margin:10px auto;color:var(--m)">Build your base. Manage your resources. Discover the unknown. Lead humanity’s next step into space.</p><p><button class="btn" onclick="go('mission')">Start New Mission</button> <button class="btn o" ${c?"":"disabled"} onclick="go('cmd')">Continue Mission</button> <button class="btn g" onclick="go('acad')">Explore Space Academy</button> <button class="btn g" onclick="go('how')">How to Play</button></p></div>
+<div class="grid"><div class="card"><h3>Manage a colony</h3>Advance 30 days, balance oxygen, water, food and power.</div><div class="card"><h3>Two worlds</h3>The Moon and Mars use different sunlight, hazards and tools.</div><div class="card"><h3>Learn real science</h3>Academy articles and quizzes link to NASA sources.</div><div class="card"><h3>Honest data</h3>Values labeled <span class="sim">simulated</span> are game balance, not NASA measurements.</div></div>`},
+mission(){return`<h2>Choose your mission</h2><div class="grid">${["moon","mars"].map(p=>`<div class="card"><div class="orbs" style="height:100px"><div class="${p}" style="left:calc(50% - 40px);top:10px;width:80px;height:80px;position:absolute"></div></div><h3>${PL[p].n}</h3><p style="color:var(--m)">${p==="moon"?"No air, extreme cold, and sunlight that comes and goes. Water ice may hide in shadowed craters.":"Thin CO₂ air, dust storms and variable sunlight. Oxygen can be made from the atmosphere."}</p><ul>${MISS[p].map(x=>"<li>"+x+"</li>").join("")}</ul><div class="tag">Start: 1,000 CR · 30 days · 6 crew · O₂ 100 · Water 200 · Food 150 · Energy 500</div><p><button class="btn" onclick="launch('${p}')">Launch ${PL[p].short} mission</button></p></div>`).join("")}</div><p class="tag sim">Starting values are illustrative game-balance numbers, not NASA requirements.</p>`},
+cmd(){if(!S.started)return`<div class="card">No active mission. <button class="btn" onclick="go('mission')">Choose a mission</button></div>`;
+const s=sunNow(),r=S.res,e=S.ev?EV[S.ev]:null,hist=S.evn;
+return`<h2>${PL[S.planet].n}</h2><div class="grid"><div class="card">${bar("Oxygen",r.o2,100,"units")}${bar("Water",r.water,200,"L")}${bar("Food",r.food,150,"kg")}${bar("Energy",r.energy,cap(),"kWh")}</div>
+<div class="card">${bar("Crew health",S.health,100,"%")}${bar("Base integrity",S.integ,100,"%")}<div class="row"><span>Day ${Math.min(S.day,30)} of 30</span><span>${Math.max(0,30-S.day+1)} days left · ${S.credits} CR</span></div></div>
+<div class="card"><b>Environment</b> <span class="tag sim">simulated</span><div class="row"><span>Temperature</span><span>${temp()} °C</span></div><div class="row"><span>Sunlight</span><span>${R(s*100)}%</span></div><div class="row"><span>Solar output</span><span>${R((S.eq.solar||0)*55*s*eqm("solar")*(tech("sol")?1.2:1))} kWh/day</span></div><div class="row"><span>Conditions</span><span>${S.st.days>0?"Reduced sunlight ("+S.st.days+"d)":"Stable"}</span></div><p style="font-size:13px;color:var(--m)">Game values inspired by LRO Diviner, MEDA and REMS ranges. Not live measurements.</p></div></div>
+${e?`<div class="card ev"><h3>⚠ ${e.n} <span class="tag">${e.sev}</span></h3><p>${e.d}</p><p style="color:var(--m)"><b>Science:</b> ${e.s}</p>${e.ch.map((c,i)=>`<button class="opt" onclick="choose(${i})">${"ABC"[i]}. ${c[0]}</button>`).join("")}</div>`:""}
+<p><button class="btn o" style="font-size:20px;padding:14px 30px" ${S.over||S.ev?"disabled":""} onclick="adv()">ADVANCE DAY</button> ${S.over?`<button class="btn" onclick="go('rep')">View report</button>`:""}</p>
+${V.map()}<div class="grid"><div class="card"><b>Objectives</b><ul>${MISS[S.planet].map(x=>"<li>"+x+"</li>").join("")}</ul></div><div class="card"><b>Daily log</b><div class="log">${S.log.slice(0,25).map(x=>"<div>"+x+"</div>").join("")||"Advance a day to see what changes."}</div></div><div class="card"><b>Space weather</b> <span class="tag sim">sample data</span>${V.fl()}</div></div>`},
+fl(){return`<div class="log" style="max-height:none">${[["Sample 1","M2.1"],["Sample 2","C8.4"],["Sample 3","X1.0"]].map(x=>`<div>${x[0]} · class ${x[1]}</div>`).join("")}</div><p style="font-size:13px;color:var(--m)">Offline demo set, not NASA observations. Live flares come from <a target="_blank" rel="noopener" href="https://ccmc.gsfc.nasa.gov/tools/DONKI/">NASA DONKI</a> and need a server-side proxy with NASA_API_KEY, which this build does not include.</p>`},
+map(){const p=S.planet,o=S.own,pal=EQ.filter(e=>o[e.id]);let h=`<div class="card"><h3>Base map <span class="tag">${p==="moon"?"Lunar regolith":"Martian soil"}</span></h3><p style="color:var(--m);font-size:14px">Pick a block, then tap a tile to build. Tap a built block to lift it. Only placed buildings work.</p><div class="pal">`+(pal.map(e=>{const b=BLK[e.id],left=o[e.id]-(S.eq[e.id]||0);return`<button class="pb ${S.sel===e.id?"on":""}" onclick="pick('${e.id}')"><span class="blk" style="background:${b[0]}">${b[1]}</span>${e.n} ×${left}</button>`}).join("")||"Buy equipment below to start building.")+`</div><div class="map ${p}">`;S.grid.forEach((g,i)=>{const b=g&&BLK[g],dec=!g&&(p==="moon"?i%7===3:i%6===1);h+=`<button class="tile" aria-label="Tile ${i+1}" onclick="tile(${i})" ${dec?`style="background-image:radial-gradient(circle,#0003 0 30%,transparent 32%)"`:""}>${g?`<span class="blk" style="background:${b[0]}">${b[1]}</span>`:""}</button>`});return h+"</div></div>"},
+lab(){if(!S.started)return V.cmd();return`<h2>Research Lab</h2><p>Points: ${S.rp} RP · Credits: ${S.credits}</p><div class="grid">${RS.filter(x=>x.pl===2||x.pl===pi()).map(x=>{const a=S.act[x.id],d=S.done[x.id];const pr=d?100:a?R((x.days-a)/x.days*100):0;return`<div class="card"><h3>${x.n}</h3><p>${x.d}</p><p style="color:var(--m)"><b>Science:</b> ${x.s}</p><p><b>${x.u}</b></p><div class="tag">${x.cost} CR · ${x.days} days · ${x.v} ${x.k} · reward ${x.rw} CR once</div><div class="bar" style="margin:8px 0"><i style="width:${pr}%;background:var(--c)"></i></div><button class="btn" ${a||d?"disabled":""} onclick="startR('${x.id}')">${d?"Completed":a?"In progress":"Start research"}</button></div>`}).join("")}</div>`},
+shop(){if(!S.started)return V.cmd();return`<h2>Marketplace</h2><p>Credits: <b>${S.credits} CR</b>${S.day===1?" · Pre-launch: equip your base, then open the Command Center.":""}</p>${V.map()}<div class="grid">${EQ.map(e=>{const lk=e.t&&!tech(e.t[pi()]);return`<div class="card"><div class="tag">${e.c}</div><h3>${e.n}</h3><p style="color:var(--m)">${e.d}</p><p>Owned: ${S.own[e.id]||0} · Placed: ${S.eq[e.id]||0} · ${e.p} CR${lk?" · requires research":""}</p><button class="btn" ${lk?"disabled":""} onclick="buy('${e.id}')">Buy</button></div>`}).join("")}</div>`},
+acad(){const a=window.AI!=null?AR[window.AI]:null;if(a)return`<button class="btn g" onclick="AI=null;draw()">Back</button><div class="card" style="margin-top:12px"><div class="tag">${a.cat}</div><h2>${a.n}</h2><p>${a.body}</p><b>Science facts</b><ul>${a.f.map(x=>"<li>"+x+"</li>").join("")}</ul><p class="sim"><b>Game assumption:</b> ${a.g}</p><p><b>In your mission:</b> ${S.started?"You are on "+PL[S.planet].short+". Check the environment panel.":"Start a mission to apply this."}</p><p><b>Sources:</b> ${a.src.map(s=>`<a target="_blank" rel="noopener" href="${s[1]}">${s[0]}</a>`).join(" · ")}</p><button class="btn" onclick="AI=null;go('quiz');qstart('${a.q}')">Take Quiz</button></div>`;
+return`<h2>Space Academy</h2><div class="grid">${AR.map((a,i)=>`<div class="card"><div class="tag">${a.cat}</div><h3>${a.n}</h3><p style="color:var(--m)">${a.body.slice(0,110)}…</p><button class="btn g" onclick="AI=${i};draw()">Read article</button></div>`).join("")}</div>`},
+quiz(){if(QS&&!QS.done){const q=QZ[QS.id].qs[QS.i];return`<h2>${QZ[QS.id].n}</h2><div class="bar"><i style="width:${(QS.i+1)/5*100}%;background:var(--c)"></i></div><div class="card" style="margin-top:12px"><p>Question ${QS.i+1} of 5</p><h3>${q[0]}</h3>${q[1].map((o,j)=>`<button class="opt ${QS.sel===null?"":j===q[2]?"ok":j===QS.sel?"no":""}" onclick="qpick(${j})">${o}</button>`).join("")}${QS.sel!==null?`<p><b>${QS.sel===q[2]?"Correct.":"Not quite."}</b> ${q[3]}</p><button class="btn" onclick="qnext()">${QS.i<4?"Next":"See results"}</button>`:""}</div>`}
+if(QS&&QS.done){const art=AR.find(a=>a.q===QS.id);return`<div class="card"><h2>Score: ${QS.right}/5</h2><p>${QS.fresh?"Earned "+4*QS.right+" CR (first completion).":"Practice run: no credits. Rewards are paid once per quiz."}</p><p>Read more: <button class="btn g" onclick="go('acad')">${art.n}</button></p><button class="btn" onclick="qstart('${QS.id}')">Practice again</button> <button class="btn g" onclick="QS=null;draw()">All quizzes</button></div>`}
+return`<h2>Quiz Center</h2><p>4 CR per correct answer, paid once per quiz (max 20 CR). Credits: ${S.credits}</p><div class="grid">${Object.keys(QZ).map(k=>`<div class="card"><h3>${QZ[k].n}</h3><p>${S.quiz[k]?"Reward claimed. Practice only.":"Reward available: up to 20 CR"}</p><button class="btn" onclick="qstart('${k}')">Start</button></div>`).join("")}</div>`},
+how(){const v=S.tutSun,g=R(55*v/100*1);return`<h2>How to Play</h2><div class="card"><ol><li>Choose a mission: Moon or Mars.</li><li>Buy equipment in the Marketplace before launch.</li><li>In the Command Center, watch the bars: green is healthy, yellow is warning, red is critical.</li><li>Press ADVANCE DAY. The crew uses oxygen, water, food and power; equipment produces and uses power.</li><li>Research projects unlock technology and pay credits once.</li><li>When a warning appears, pick a response. Each choice has a cost.</li><li>Quizzes pay credits once per quiz.</li><li>Win by surviving 30 days with health and integrity above 0. Lose if either hits 0.</li></ol></div>
+<div class="card"><h3>Try it: solar power</h3><p>One solar array makes up to 55 kWh. Drag the sunlight and see the output.</p><input type="range" min="5" max="100" value="${v}" oninput="S.tutSun=+this.value;document.getElementById('tt').textContent=Math.round(55*this.value/100)" aria-label="Sunlight percent"> <b>${v}% sunlight</b><p>Output: <b id="tt">${g}</b> kWh/day per array. Base systems use about 15 kWh, so low sun means you need batteries.</p></div>`},
+ach(){return`<h2>Achievements</h2><div class="grid">${AC.map(a=>`<div class="card" style="${S.ach&&S.ach[a[0]]?"border-color:var(--g)":"opacity:.6"}"><h3>${a[1]}</h3><p>${a[2]}</p><span class="tag">${S.ach&&S.ach[a[0]]?"Unlocked":"Locked"}</span></div>`).join("")}</div>`},
+rep(){if(!S.started)return V.cmd();return`<h2>Mission Report</h2><div class="card"><h3>${PL[S.planet].n}: ${S.over?(S.over==="win"?"Success":"Failed"):"in progress"}</h3><div class="grid" style="gap:6px"><div>Crew survival: ${S.health>0?"6 of 6":"lost"}</div><div>Crew health: ${S.health}%</div><div>Base integrity: ${S.integ}%</div><div>Credits earned: ${S.earned}</div><div>Credits spent: ${S.spent}</div><div>Research completed: ${Object.keys(S.done).length}</div><div>Discoveries: ${S.disc}</div><div>Events handled: ${S.evn}</div><div>Resource efficiency: ${R(Object.keys(START).reduce((a,k)=>a+Math.min(1,S.res[k]/START[k]),0)/4*100)}%</div></div><h2>Score ${score()} · ${rank()}</h2><button class="btn" onclick="go('mission')">New mission</button></div>`},
+set(){return`<h2>Settings</h2><div class="card"><p>Progress is saved in this browser only.</p><button class="btn o" onclick="if(confirm('Erase all progress?')){localStorage.removeItem(SK);S=fresh();go('home')}">Reset all progress</button></div><div class="card"><b>Data sources</b><ul><li><a target="_blank" rel="noopener" href="https://www.diviner.ucla.edu/data">LRO Diviner</a>, <a target="_blank" rel="noopener" href="https://svs.gsfc.nasa.gov/4574/">NASA SVS</a>, <a target="_blank" rel="noopener" href="https://www.lpi.usra.edu/lunar/lunar-south-pole-atlas/">LPI South Pole Atlas</a></li><li><a target="_blank" rel="noopener" href="https://pds.nasa.gov/ds-view/pds/viewProfile.jsp?dsid=MSL-M-REMS-4-ENVRDR-V1.0">MSL REMS</a> (historical Gale Crater data), <a target="_blank" rel="noopener" href="https://science.nasa.gov/mission/mars-2020-perseverance/science-instruments/">Perseverance MEDA</a></li></ul><p class="sim">No live NASA data is shown in this build. All in-game values are simulated game-balance parameters.</p></div>`}};
+window.AI=null;
+function draw(){$("#nav").innerHTML="<b>ASTROBASE</b>"+PAGES.map(p=>`<button class="${S.page===p[0]?"on":""}" onclick="go('${p[0]}')">${p[1]}</button>`).join("");
+$("#top").innerHTML=`<span>Mission: <b>${S.planet?PL[S.planet].short:"none"}</b></span><span>Day: <b>${S.started?Math.min(S.day,30):"-"}</b></span><span>Credits: <b>${S.credits} CR</b></span><span>Session: <b>${S.started?(S.over?"ended":"active"):"idle"}</b></span>`;
+$("#pg").innerHTML=V[S.page]()}
+draw();
+</script><script>function recount(){S.eq={};S.bld.forEach(b=>S.eq[b.id]=(S.eq[b.id]||0)+1)}</script><script>(()=>{const T=THREE,W=document.createElement("div");W.id="world";
+W.innerHTML='<div id="tb"><button class="btn g" id="rc">Reset camera</button><button class="btn g" onclick="brt()">Rotate (R)</button><button class="btn g" onclick="cancel()">Cancel (Esc)</button><button class="btn g" id="ql">Quality: high</button><span id="cp">N</span></div><div id="insp"></div>';
+const rd=new T.WebGLRenderer({antialias:true});rd.shadowMap.enabled=true;rd.setPixelRatio(Math.min(devicePixelRatio,2));W.prepend(rd.domElement);
+const sc=new T.Scene(),cam=new T.PerspectiveCamera(50,1,.5,1500),ctl=new T.OrbitControls(cam,rd.domElement);
+ctl.maxPolarAngle=1.4;ctl.minDistance=8;ctl.maxDistance=90;ctl.enableDamping=true;cam.position.set(28,18,28);
+const sun=new T.DirectionalLight(0xffffff,2),amb=new T.AmbientLight(0xffffff,.2),sh=sun.shadow.camera;sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sh.left=sh.bottom=-60;sh.right=sh.top=60;sh.far=400;sc.add(sun,amb);
+const stars=new T.Points(new T.BufferGeometry().setAttribute("position",new T.Float32BufferAttribute(Array.from({length:7500},()=>Math.random()-.5),3).apply?undefined:undefined),new T.PointsMaterial({color:0xffffff,size:1.6,sizeAttenuation:false}));
+{const a=[];for(let i=0;i<2500;i++){const u=Math.random()*6.283,v=Math.random()*1.4+.05,r=900;a.push(Math.cos(u)*Math.sin(v)*r,Math.cos(v)*r,Math.sin(u)*Math.sin(v)*r)}stars.geometry=new T.BufferGeometry();stars.geometry.setAttribute("position",new T.Float32BufferAttribute(a,3))}
+const earth=new T.Mesh(new T.SphereGeometry(16,24,16),new T.MeshBasicMaterial({color:0x6f9fd8}));earth.position.set(-300,120,-500);sc.add(stars,earth);
+const dp=new Float32Array(1800);for(let i=0;i<1800;i+=3){dp[i]=(Math.random()-.5)*90;dp[i+1]=Math.random()*20;dp[i+2]=(Math.random()-.5)*90}
+const dust=new T.Points(new T.BufferGeometry().setAttribute("position",new T.BufferAttribute(dp,3)),new T.PointsMaterial({size:.5,transparent:true,opacity:.1,depthWrite:false}));sc.add(dust);
+let cur,TG,TER,PG,ghost,gp={x:0,z:0},gv=0,rot=0,selI=-1,back=null,CR=[],sd=1,snap=0,LQ=0,cT=1,dur=1,cf=new T.Vector3(),cd=new T.Vector3(28,18,28);
+const rn=()=>(sd=sd*16807%2147483647)/2147483647,tg={i:1,d:.1,f:0},cu={i:1,d:.1,f:0},base=new T.Color(0xb07a58);
+function H(x,z){const d0=Math.hypot(x,z),f=Math.min(1,d0/28);let h=(Math.sin(x*.07)*Math.cos(z*.06)*3+Math.sin(x*.19+z*.15)*.9+Math.sin(z*.31)*Math.cos(x*.27)*.35)*(.15+.85*f);
+for(const c of CR){const d=Math.hypot(x-c[0],z-c[1])/c[2];h+=d<1?-c[3]*(1-d*d):c[3]*.35*Math.exp(-(((d-1)*3)**2))}return h+Math.max(0,d0-78)*.3}
+function build(p){cur=p;snap=1;sd=p=="moon"?7:19;if(TG)sc.remove(TG);TG=new T.Group();sc.add(TG);CR=[];
+for(let i=0;i<22;i++){const r=4+rn()*(p=="moon"?16:9),a=rn()*6.283,d=r+24+rn()*60;CR.push([Math.cos(a)*d,Math.sin(a)*d,r,(p=="moon"?1:.5)*(1+rn()*3)])}
+const g=new T.PlaneGeometry(260,260,120,120);g.rotateX(-Math.PI/2);const ps=g.attributes.position,col=[];
+for(let i=0;i<ps.count;i++){const x=ps.getX(i),z=ps.getZ(i),h=H(x,z);ps.setY(i,h);const v=Math.max(.12,Math.min(.95,.5+.2*Math.sin(x*.9+z*.4)*Math.cos(z*1.1)+h*.035));col.push(...(p=="moon"?[v,v,v*1.02]:[v*.85+.1,v*.45+.1,v*.3+.05]))}
+g.setAttribute("color",new T.Float32BufferAttribute(col,3));g.computeVertexNormals();
+TER=new T.Mesh(g,new T.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:p=="moon"}));TER.receiveShadow=true;TG.add(TER);
+const im=new T.InstancedMesh(new T.DodecahedronGeometry(1,0),new T.MeshStandardMaterial({color:p=="moon"?0x777777:0x7a4a33,roughness:1,flatShading:true}),260),m=new T.Matrix4(),q=new T.Quaternion(),e=new T.Euler();
+for(let i=0;i<260;i++){let x,z;do{x=(rn()-.5)*200;z=(rn()-.5)*200}while(Math.hypot(x,z)<9);const s=.4+Math.pow(rn(),3)*3.2;e.set(rn()*3,rn()*3,rn()*3);m.compose(new T.Vector3(x,H(x,z)+s*.3,z),q.setFromEuler(e),new T.Vector3(s*(1+rn()),s*.7,s));im.setMatrixAt(i,m)}
+im.castShadow=im.receiveShadow=true;TG.add(im);
+const mars=p=="mars";stars.visible=earth.visible=!mars;sun.position.set(mars?70:110,mars?55:14,mars?40:70);amb.intensity=mars?.5:.12;
+sc.background=mars?base.clone():new T.Color(0x000000);sc.fog=mars?new T.FogExp2(0xb07a58,.004):null;dust.material.color.set(mars?0xd9a073:0xcccccc)}
+const Mo={solar:[['b',3,.12,4.5,-3.4,2.6,0,0x1c2b4a,-.6],['b',3,.12,4.5,0,2.6,0,0x1c2b4a,-.6],['b',3,.12,4.5,3.4,2.6,0,0x1c2b4a,-.6],['c',.2,2.4,0,-3.4,1.2,0,0x999999],['c',.2,2.4,0,0,1.2,0,0x999999],['c',.2,2.4,0,3.4,1.2,0,0x999999]],
+bat:[['b',9,.4,5,0,.3,0,0x444444],['c',1.3,3.4,0,-2.8,2.2,0,0xdddddd],['c',1.3,3.4,0,0,2.2,0,0xdddddd],['c',1.3,3.4,0,2.8,2.2,0,0xdddddd]],
+gen:[['b',5,2.6,3.5,0,1.5,0,0x555555],['c',.4,2.2,0,1.5,3.6,0,0x222222],['b',1,.8,3.6,-2.4,1.2,0,0xaaaaaa]],
+o2:[['s',2.2,0,0,0,2.7,0,0xeeeeee],['b',3,1.4,3,3.2,1,0,0x777777],['c',.3,4,0,-3,2.2,0,0xaaaaaa]],
+rec:[['c',1.6,3.4,0,-1.8,2,0,0xffffff],['c',1.6,3.4,0,1.8,2,0,0xbbbbbb],['b',5,.6,2.5,0,.5,0,0x444444]],
+ice:[['b',4,1.2,4,0,.8,0,0x666666],['c',.25,7,0,0,4.5,0,0xcccccc],['b',2,.3,2,0,8.1,0,0xeeeeee],['b',1.5,1.5,1.5,2.6,1.4,0,0x999999]],
+gh:[['S',3.8,0,1,0,.2,0,0xe8f0e8],['b',7,.4,7,0,.1,0,0x555555]],hydro:[['b',8,.5,4,0,.35,0,0x555555],['B',7.6,2,3.6,0,1.6,0,0xdfe9df]],
+shield:[['s',4.5,0,1,0,.2,0,0x4a4a4a],['b',2,1.6,2,0,.8,4.2,0x777777]],ins:[['b',6,2.4,5,0,1.4,0,0xbbbbbb],['b',6.4,.3,5.4,0,2.7,0,0x222222]],
+dust:[['b',3,.4,3,0,.2,0,0x666666],['c',.25,6,0,0,3.2,0,0xcccccc],['b',.2,.2,3.6,0,6.3,0,0xeeeeee]],
+rover:[['b',4,1.2,2.4,0,1.6,0,0xcccccc],['b',1.8,.9,2,-.4,2.7,0,0x333333],['c',.7,.5,0,-1.4,.9,1.3,0x222222,0,1.5708],['c',.7,.5,0,1.4,.9,1.3,0x222222,0,1.5708],['c',.7,.5,0,-1.4,.9,-1.3,0x222222,0,1.5708],['c',.7,.5,0,1.4,.9,-1.3,0x222222,0,1.5708]],
+lab:[['b',6,2.6,5,0,1.6,0,0xeeeeee],['s',2.2,0,1,0,2.9,0,0xcccccc],['c',.1,5,0,2.4,5,1.5,0x222222]]};
+function mk(id,gh){const g=new T.Group();[['c',4.4,.5,0,0,-.1,0,0x2a2a2a],...(Mo[id]||[])].forEach(p=>{const[k,a,b,c,x,y,z,col,rx,rz]=p,gl=k=="B"||k=="S";
+const geo=k=="b"||k=="B"?new T.BoxGeometry(a,b,c):k=="c"?new T.CylinderGeometry(a,a,b,16):new T.SphereGeometry(a,16,10,0,6.283,0,c||gl?1.5708:3.1416);
+const m=new T.Mesh(geo,new T.MeshStandardMaterial({color:col,roughness:.6,metalness:.2,transparent:gh||gl,opacity:gh?.55:gl?.5:1}));
+m.position.set(x,y,z);m.rotation.set(rx||0,0,rz||0);m.castShadow=m.receiveShadow=true;g.add(m)});return g}
+const PM=()=>S.started&&!S.over&&S.sel&&(S.own[S.sel]||0)-(S.eq[S.sel]||0)>0;
+function ok(x,z){if(Math.hypot(x,z)>42)return 0;const s=Math.max(Math.abs(H(x+2,z)-H(x-2,z)),Math.abs(H(x,z+2)-H(x,z-2)))/4;return s<=.28&&S.bld.every(b=>Math.hypot(b.x-x,b.z-z)>=8)}
+function PGb(){if(PG)sc.remove(PG);PG=new T.Group();sc.add(PG);S.bld.forEach((b,i)=>{const m=mk(b.id);m.position.set(b.x,H(b.x,b.z),b.z);m.rotation.y=b.r;m.userData.i=i;PG.add(m);
+if(i==selI){const r=new T.Mesh(new T.RingGeometry(4.6,5,32).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:0xffffff}));r.position.set(b.x,H(b.x,b.z)+.2,b.z);PG.add(r)}})}
+function insp(){const d=W.querySelector("#insp");if(selI>=0&&S.bld[selI]){const b=S.bld[selI],e=EQ.find(x=>x.id==b.id),st=S.res.energy<=0?"Offline: no power":b.id=="ice"&&!tech(S.planet=="moon"?"ice":"wx")?"Idle: research required":"Operational";
+d.style.display="block";d.innerHTML=`<b>${e.n.toUpperCase()}</b><div>Status: ${st}</div><div>Condition: ${R(S.integ)}%</div><div>Cost: ${e.p} CR</div><div style="color:#aaa">${e.d}</div><div class="pal"><button class="pb" onclick="bmv()">Relocate</button><button class="pb" onclick="bdl()">Demolish</button></div>`}
+else if(PM()){d.style.display="block";d.innerHTML=`<b>PLACING ${EQ.find(x=>x.id==S.sel).n.toUpperCase()}</b><div style="color:#aaa">Move over terrain, click to place. White is valid, red is too steep, too close or out of range.</div>`}else d.style.display="none"}
+function sync(){if(!S.planet||!W.isConnected)return;if(cur!=S.planet)build(S.planet);const m=S.planet=="mars",s=S.started?sunNow():.6,st=S.started&&S.st.days>0;
+tg.i=m?.5+1.6*s:.15+2.8*s;tg.d=st?.9:m?.3:.08;tg.f=m?(st?.02:.004):0;if(snap){Object.assign(cu,tg);snap=0}
+if(selI>=S.bld.length)selI=-1;PGb();if(ghost){sc.remove(ghost);ghost=null}if(PM()){ghost=mk(S.sel,1);ghost.visible=false;sc.add(ghost)}insp()}
+const rc=new T.Raycaster(),nd=new T.Vector2(),hit=(e,o)=>{const r=rd.domElement.getBoundingClientRect();nd.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);rc.setFromCamera(nd,cam);return rc.intersectObjects(o,true)[0]};
+function aim(e){const h=hit(e,[TER]);if(!h||!ghost)return;gp={x:Math.round(h.point.x/2)*2,z:Math.round(h.point.z/2)*2};gv=ok(gp.x,gp.z);ghost.position.set(gp.x,H(gp.x,gp.z),gp.z);ghost.visible=true;ghost.traverse(o=>o.material&&o.material.emissive.set(gv?0x555555:0xaa0000))}
+let dn;const cv=rd.domElement;cv.addEventListener("pointermove",e=>{if(PM())aim(e)});cv.addEventListener("pointerdown",e=>dn=[e.clientX,e.clientY]);
+cv.addEventListener("pointerup",e=>{if(!dn||Math.hypot(e.clientX-dn[0],e.clientY-dn[1])>6)return;
+if(PM()){aim(e);if(!gv)return toast("Invalid spot: too steep, too close to another building, or out of range");S.bld.push({id:S.sel,x:gp.x,z:gp.z,r:rot});back=null;recount();if((S.own[S.sel]||0)-(S.eq[S.sel]||0)<1)S.sel=null;save();draw();return}
+const h=hit(e,PG.children);let o=h&&h.object;while(o&&o.userData.i==null)o=o.parent;selI=o?o.userData.i:-1;sync()});
+window.bmv=()=>{const b=S.bld[selI];back={...b};S.bld.splice(selI,1);recount();S.sel=b.id;rot=b.r;selI=-1;save();draw()};
+window.bdl=()=>{const b=S.bld[selI];S.bld.splice(selI,1);recount();selI=-1;save();draw();toast("Demolished. Returned to stock, place it again any time.")};
+window.brt=()=>{if(selI>=0&&S.bld[selI]){S.bld[selI].r+=Math.PI/4;save();sync()}else rot+=Math.PI/4};
+window.cancel=()=>{if(back){S.bld.push(back);back=null;recount()}S.sel=null;selI=-1;save();draw()};
+addEventListener("keydown",e=>{if(e.key=="Escape")cancel();if(e.key=="r"||e.key=="R")brt()});
+const fly=(f,d)=>{cf.copy(f);dur=d;cT=0};
+W.querySelector("#rc").onclick=()=>{ctl.target.set(0,0,0);fly(cam.position,1.2)};
+W.querySelector("#ql").onclick=function(){LQ=!LQ;rd.setPixelRatio(LQ?1:Math.min(devicePixelRatio,2));sun.castShadow=!LQ;this.textContent="Quality: "+(LQ?"low":"high")};
+new ResizeObserver(()=>{const w=W.clientWidth,h=W.clientHeight;if(w&&h){rd.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix()}}).observe(W);
+let last=0;(function loop(t){requestAnimationFrame(loop);if(!W.isConnected||!cur)return;const dt=Math.min(.05,(t-last)/1000);last=t;
+if(cT<1){cT=Math.min(1,cT+dt/dur);const k=cT*cT*(3-2*cT);cam.position.lerpVectors(cf,cd,k)}
+for(const k in tg)cu[k]+=(tg[k]-cu[k])*Math.min(1,dt*1.5);sun.intensity=cu.i;dust.material.opacity=cu.d;
+if(sc.fog){sc.fog.density=cu.f;sc.background.copy(base).multiplyScalar(1-cu.f*15);sc.fog.color.copy(sc.background)}
+const a=dust.geometry.attributes.position,sp=(cur=="mars"?6:.8)*(1+cu.d*4);for(let i=0;i<1800;i+=3){dp[i]+=dt*sp;if(dp[i]>45)dp[i]=-45}a.needsUpdate=true;
+if(ghost)ghost.rotation.y=rot;ctl.target.clampLength(0,40);ctl.update();W.querySelector("#cp").style.transform=`rotate(${-ctl.getAzimuthalAngle()}rad)`;rd.render(sc,cam)})(0);
+function brief(p){const d=document.createElement("div");d.id="brief";d.innerHTML=`<b>MISSION BRIEFING</b><div>${PL[p].n}. Empty construction site cleared. Buy equipment below, place it on the terrain, then advance the days.</div><ul>${MISS[p].map(x=>"<li>"+x+"</li>").join("")}</ul><button class="btn" onclick="this.parentNode.remove()">Begin construction</button>`;W.appendChild(d)}
+function intro(p){const d=document.createElement("div");d.id="intro";d.innerHTML=`<div class="${p}"></div><div id="ic">DESCENDING TO ${PL[p].n.toUpperCase()}</div>`;document.body.appendChild(d);const pl=d.firstChild;
+pl.style.cssText="position:absolute;left:50%;top:50%;margin:-45px;width:90px;height:90px;transition:transform 3.4s cubic-bezier(.5,0,.9,.5)";requestAnimationFrame(()=>requestAnimationFrame(()=>pl.style.transform="scale(60)"));
+sync();cam.position.set(0,170,60);setTimeout(()=>{d.style.opacity=0;ctl.target.set(0,0,0);fly(new T.Vector3(0,170,60),3.2);setTimeout(()=>{d.remove();brief(p)},1200)},3400)}
+const oL=window.launch;window.launch=p=>{oL(p);back=null;selI=-1;S.page="cmd";save();draw();intro(p)};
+const oD=window.draw;window.draw=()=>{oD();const s=document.querySelector("#slot");if(s)s.appendChild(W);else W.remove();sync()};
+V.map=()=>{let h=`<div class="card"><h3>Colony site</h3><p style="color:var(--m);font-size:14px">Buy equipment, pick one to preview it, click the terrain to place it. Click a building to inspect it. Only placed buildings work.</p><div id="slot"></div><div class="pal">`;
+EQ.forEach(e=>{const l=(S.own[e.id]||0)-(S.eq[e.id]||0);if(l>0)h+=`<button class="pb ${S.sel==e.id?"on":""}" onclick="pick('${e.id}')">${e.n} ×${l}</button>`});
+return h+`</div><div class="pal">`+EQ.map(e=>`<button class="pb" ${e.t&&!tech(e.t[pi()])||S.credits<e.p?"disabled":""} onclick="buy('${e.id}')" title="${e.d}">+ ${e.n} · ${e.p} CR</button>`).join("")+"</div></div>"};
+if(!S.bld){S.bld=[];(S.grid||[]).forEach((g,i)=>{if(g)S.bld.push({id:g,x:((i%8)-3.5)*9,z:(Math.floor(i/8)-2.5)*9,r:0})})}
+draw()})();
+</script></body></html>
