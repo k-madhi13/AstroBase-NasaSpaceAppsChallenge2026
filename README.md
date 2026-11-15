@@ -54,7 +54,4 @@ These datasets are used across the simulator to inform environmental temperature
 - **Data Persistence:** Browser `localStorage` for saving mission state, achievements, and quiz progress offline
 - **Hosting:** Netlify
 
-```text
-AstroBase-NasaSpaceAppsChallenge2026/
-├── index.html          # Self-contained web application (3D terrain engine, simulation loop, Space Academy, and Quiz Center)
-└── README.md           # Project overview, educational features, dataset citations, and local setup instructions
+
